@@ -42,6 +42,7 @@ public class FirmTest extends BaseTest {
         Response verifyResponse = client.getFirmInfo();
         patchResponse.then().statusCode(204);
 
+
         String updatedName = verifyResponse.jsonPath().getString("name");
         String updatedEmail = verifyResponse.jsonPath().getString("email");
         String updatedTown = verifyResponse.jsonPath().getString("town");
