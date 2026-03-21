@@ -1,9 +1,8 @@
 package api.client;
 
 import api.base.BaseService;
-import api.base.InvoiceEndPoints;
+import api.endPoints.InvoiceEndPoints;
 import api.dto.InvoiceDTO;
-import com.sun.net.httpserver.Request;
 import io.restassured.response.Response;
 
 import java.util.Map;
@@ -53,6 +52,13 @@ public class InvoiceClient extends BaseService {
                 .when()
                 .delete(InvoiceEndPoints.INVOICE_BY_ID);
 
+
+    }
+
+
+    public Response getInvoicePaymentStatus(){
+
+        return get(InvoiceEndPoints.invoicePaymentStatus);
 
     }
 
