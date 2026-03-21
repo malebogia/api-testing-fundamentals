@@ -2,7 +2,10 @@ package test.auth;
 
 import api.client.AuthClient;
 import api.dto.LoginRequestDTO;
+import api.utils.ConfigReader;
 import io.restassured.response.Response;
+
+import java.io.ObjectInputFilter;
 
 public class TokenManager {
 
@@ -16,9 +19,9 @@ public class TokenManager {
 
             LoginRequestDTO requestDTO =
                     new LoginRequestDTO(
-                            "kirikam62@gmail.com",
-                            "parola123",
-                            "kam");
+                            ConfigReader.getProperty("user.email"),
+                            ConfigReader.getProperty("user.password"),
+                            ConfigReader.getProperty("user.domain"));
 
             Response response = client.loginWithoutAuth(requestDTO);
 

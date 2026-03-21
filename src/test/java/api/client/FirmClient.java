@@ -1,7 +1,7 @@
 package api.client;
 
 import api.base.BaseService;
-import api.base.EndPoints;
+import api.endPoints.EndPoints;
 import api.dto.FirmDTO;
 import io.restassured.response.Response;
 

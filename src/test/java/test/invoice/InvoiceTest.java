@@ -8,7 +8,7 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.core.Is.is;
 
 
@@ -94,6 +94,23 @@ public class InvoiceTest extends BaseTest {
 
         Response getResponse = client.getExactInvoice(id);
         getResponse.then().statusCode(404);
+
+    }
+
+    @Test
+    public void getInvoicePaymentStatuss() {
+
+        InvoiceClient getClient = new InvoiceClient();
+
+        Response response = getClient.getInvoicePaymentStatus();
+
+        response
+                .then()
+                .statusCode(200)
+                .body("",hasItems("paid","unpaid","partially-paid","anulled","draft"))
+                .body("size()" , equalTo(5))
+                .body("",everyItem(instanceOf(String.class)))
+                .header("Content-Type", containsString("application/json"));
 
     }
 
