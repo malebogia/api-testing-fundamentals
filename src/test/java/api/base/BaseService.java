@@ -16,13 +16,19 @@ import static io.restassured.RestAssured.given;
 public class BaseService {
 
 
-    //TODO Change LOG().ALL() to .log().ifValidationFails()
+
 
     protected RequestSpecification request() {
         return given()
                 .spec(RestAssured.requestSpecification)
                 .header("Authorization", "Bearer " + TokenManager.getToken());
     }
+
+    protected RequestSpecification requestWithoutAuth() {
+        return given()
+                .spec(RestAssured.requestSpecification);
+    }
+
 
 
 
@@ -39,6 +45,17 @@ public class BaseService {
 
     }
 
+    protected Response getWithoutAuth(String endpoint) {
+        return requestWithoutAuth()
+                .when()
+                .get(endpoint)
+                .then()
+                .extract()
+                .response();
+    }
+
+
+
     protected Response post(String endpoint, Object body){
         return  request()
                 .body(body)
@@ -49,6 +66,19 @@ public class BaseService {
                 .extract().response();
 
     }
+
+
+    protected Response postWithoutAuth(String endpoint, Object body) {
+        return requestWithoutAuth()
+                .body(body)
+                .when()
+                .post(endpoint)
+                .then()
+                .extract()
+                .response();
+    }
+
+
 
     protected Response put(String endpoint, Object body) {
         return request()

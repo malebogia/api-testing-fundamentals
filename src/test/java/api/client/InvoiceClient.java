@@ -1,6 +1,7 @@
 package api.client;
 
 import api.base.BaseService;
+import api.dto.SendEmailDTO;
 import api.endPoints.InvoiceEndPoints;
 import api.dto.InvoiceDTO;
 import io.restassured.response.Response;
@@ -10,7 +11,13 @@ import java.util.Map;
 public class InvoiceClient extends BaseService {
 
     public Response getInvoices() {
-        return get(InvoiceEndPoints.getInvoices);
+        return get(InvoiceEndPoints.GET_INVOICE);
+
+    }
+
+    public Response getInvoiceWithoutAuth(){
+
+        return getWithoutAuth(InvoiceEndPoints.GET_INVOICE);
 
     }
 
@@ -19,7 +26,7 @@ public class InvoiceClient extends BaseService {
         return request()
                 .queryParams(queryParams)
                 .when()
-                .get(InvoiceEndPoints.getInvoices);
+                .get(InvoiceEndPoints.GET_INVOICE);
     }
 
     public Response getExactInvoice(int id) {
@@ -33,7 +40,7 @@ public class InvoiceClient extends BaseService {
 
     public Response postInvoice(InvoiceDTO invoice) {
 
-        return post(InvoiceEndPoints.getInvoices, invoice);
+        return post(InvoiceEndPoints.GET_INVOICE, invoice);
 
     }
 
@@ -58,9 +65,29 @@ public class InvoiceClient extends BaseService {
 
     public Response getInvoicePaymentStatus(){
 
-        return get(InvoiceEndPoints.invoicePaymentStatus);
+        return get(InvoiceEndPoints.INVOICE_PAYMENT_STATUS);
 
     }
+
+    public Response getInvoiceHistory(){
+
+        return get(InvoiceEndPoints.INVOICE_HISTORY);
+
+    }
+
+    public Response postEMail(int id, SendEmailDTO sendEmailDTO){
+        return request()
+                .pathParam("id",id)
+                .body(sendEmailDTO)
+                .when()
+                .post(InvoiceEndPoints.SEND_EMAIL);
+
+
+    }
+
+
+
+
 
 
 }
