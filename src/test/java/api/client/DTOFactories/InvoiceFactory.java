@@ -1,4 +1,4 @@
-package api.dto.DTOFactories;
+package api.client.DTOFactories;
 
 import api.dto.InvoiceDTO;
 import api.dto.ItemDTO;

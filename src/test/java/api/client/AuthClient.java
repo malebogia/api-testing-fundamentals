@@ -13,8 +13,10 @@ public class AuthClient extends BaseService {
 
 
     public Response login(LoginRequestDTO loginRequest) {
-        return post("login/token", loginRequest);
+        return postWithoutAut("login/token", loginRequest);
     }
+
+
 
     public Response loginWithoutAuth(LoginRequestDTO loginRequest) {
         return given()
