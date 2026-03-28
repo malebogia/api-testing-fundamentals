@@ -10,10 +10,10 @@ import static io.restassured.RestAssured.given;
 public class FirmClient extends BaseService {
 
     public Response getFirmInfo(){
-        return get(EndPoints.FIRM);
+        return getWithAuth(EndPoints.FIRM);
     }
 
-    public Response patchFirmData(FirmDTO firm){
+  /* public Response patchFirmData(FirmDTO firm){
         return patch(EndPoints.FIRM,firm);
     }
 
@@ -22,5 +22,5 @@ public class FirmClient extends BaseService {
 
     }
 
-
+*/
 }

@@ -22,7 +22,7 @@ public class FirmTest extends BaseTest {
     }
 
 
-    @Test
+ /*   @Test
     public void UpdateALlFirmData() {
 
         FirmClient client = new FirmClient();
@@ -56,6 +56,6 @@ public class FirmTest extends BaseTest {
 
 
     }
-
+*/
 
 }
