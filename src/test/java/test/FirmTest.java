@@ -3,8 +3,10 @@ package test;
 import api.base.BaseTest;
 import api.client.FirmClient;
 import api.dto.FirmDTO;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class FirmTest extends BaseTest {
@@ -14,12 +16,37 @@ public class FirmTest extends BaseTest {
 
         FirmClient client = new FirmClient();
 
-        Response response = client.getFirmInfo();
+        Response response = client.getFirmInfoEn();
 
         response.prettyPrint();
         response.then().statusCode(200);
 
     }
+
+    @Test
+    @DisplayName("Get firm info without Auth")
+    public void getFirmInfoNoAuth(){
+
+        FirmClient client = new FirmClient();
+
+        Response response = client.getFirmInfoNoAuthEn();
+
+        response.then()
+                .statusCode(401)
+                .contentType(ContentType.JSON);
+
+        String status = response.jsonPath().getString("status");
+        String message = response.jsonPath().getString("message");
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals("error" , status),
+                () -> Assertions.assertEquals("Token not found." , message)
+        );
+
+
+    }
+
+
 
 
  /*   @Test
