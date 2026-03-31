@@ -12,7 +12,7 @@ public class FirmTest extends BaseTest {
     private FirmClient client;
 
     @BeforeEach
-    void setContext{
+    void setContext(){
         client = new FirmClient();
     }
 

@@ -39,6 +39,21 @@ public class BaseService {
         return get(endpoint, true, LanguageHeader.EN);
     }
 
+
+    @Step("GET {endpoint} with Query Params")
+    protected Response getWithParams(String endpoint, Map<String, ?> queryParams, boolean auth, LanguageHeader lang) {
+        logger.info("GET {} | Params: {} | Auth: {}", endpoint, queryParams, auth);
+        return request(auth, lang)
+                .queryParams(queryParams) // RestAssured handles the map automatically
+                .when()
+                .get(endpoint)
+                .then()
+                .extract()
+                .response();
+    }
+
+
+
     // --- POST METHODS ---
     @Step("POST {endpoint}")
     protected Response post(String endpoint, Object body, boolean auth, LanguageHeader lang) {
