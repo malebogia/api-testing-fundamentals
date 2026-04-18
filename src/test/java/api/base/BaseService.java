@@ -4,6 +4,7 @@ import api.utils.LanguageHeader;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.apache.commons.codec.language.bm.Lang;
 import test.auth.TokenManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,21 +41,36 @@ public class BaseService {
     }
 
 
-    @Step("GET {endpoint} with Query Params")
-    protected Response getWithParams(String endpoint, Map<String, ?> queryParams, boolean auth, LanguageHeader lang) {
-        logger.info("GET {} | Params: {} | Auth: {}", endpoint, queryParams, auth);
-        return request(auth, lang)
-                .queryParams(queryParams) // RestAssured handles the map automatically
-                .when()
-                .get(endpoint)
-                .then()
-                .extract()
-                .response();
-    }
+        @Step("GET {endpoint} with Query Params")
+        protected Response getWithParams(String endpoint, Map<String, ?> queryParams, boolean auth, LanguageHeader lang) {
+            logger.info("GET {} | Params: {} | Auth: {}", endpoint, queryParams, auth);
+            return request(auth, lang)
+                    .queryParams(queryParams) // RestAssured handles the map automatically
+                    .when()
+                    .get(endpoint)
+                    .then()
+                    .extract()
+                    .response();
+        }
+
+        @Step("GET {endpoint} with Path Params {pathParam}")
+        protected Response getWithPathParam(String endpoint, Object id, boolean auth,LanguageHeader lang){
+            logger.info("GET {} | PathParam: {} | Auth: {} ", endpoint,id,auth);
+
+            return request(auth,lang)
+                    .pathParam("id", id)
+                    .when()
+                    .get(endpoint)
+                    .then()
+                    .extract()
+                    .response();
+
+
+        }
 
 
 
-    // --- POST METHODS ---
+        // --- POST METHODS ---
     @Step("POST {endpoint}")
     protected Response post(String endpoint, Object body, boolean auth, LanguageHeader lang) {
         logger.info("POST {} [Auth: {}, Lang: {}]", endpoint, auth, lang.getCode());
@@ -63,6 +79,28 @@ public class BaseService {
 
     protected Response postWithAuth(String endpoint, Object body) {
         return post(endpoint, body, true, LanguageHeader.EN);
+    }
+
+    @Step("POST {endpoint} | PathParam {paramName} = {paramValue}}")
+    protected Response postWithPathParam(
+            String endpoint,
+            String paramName,
+            Object paramValue,
+            Object body,
+            boolean auth,
+            LanguageHeader lang){
+        logger.info("POST {} | PathParam {}={} | Auth: {}",
+                endpoint,paramName,paramValue,auth);
+
+        return request(auth,lang)
+                .pathParam(paramName,paramValue)
+                .body(body)
+                .when()
+                .post(endpoint)
+                .then()
+                .extract().
+                response();
+
     }
 
     // --- PUT METHODS (Replace) ---

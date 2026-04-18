@@ -4,6 +4,8 @@ import api.dto.InvoiceDTO;
 import api.dto.ItemDTO;
 import api.dto.VatDto;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,7 +26,10 @@ public class InvoiceFactory {
 
         InvoiceDTO invoice = new InvoiceDTO();
 
-        invoice.setToName("Ivan " + UUID.randomUUID());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+        String timestamp = LocalDateTime.now().format(formatter);
+
+        invoice.setToName("Ivan " + timestamp);
         invoice.setToAddress("Address 123");
         invoice.setToMol("Dule Savic");
         invoice.setToBulstat("4759345334");
