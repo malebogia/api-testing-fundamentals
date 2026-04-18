@@ -1,5 +1,6 @@
 package api.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.UUID;
 
 public class VatDto {
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     private Integer percent;
 
     @JsonProperty("reason_without")

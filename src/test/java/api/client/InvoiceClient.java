@@ -1,6 +1,9 @@
 package api.client;
 
 import api.base.BaseService;
+import api.dto.InvoiceDTO;
+import api.dto.SendEmailDTO;
+import api.endPoints.EndPoints;
 import api.endPoints.InvoiceEndPoints;
 import api.utils.LanguageHeader;
 import io.qameta.allure.Step;
@@ -25,16 +28,43 @@ public class InvoiceClient extends BaseService {
      * @return Response   The API response object
      */
 
+    @Step("Fetch invoices with filters: {queryParams}")
+    public Response getInvoicesWithParams(Map<String, Object> queryParams, LanguageHeader lang) {
 
-        @Step("Fetch invoices with filters: {queryParams}")
-        public Response getInvoicesWithParams (Map < String, Object > queryParams, LanguageHeader lang ){
+        return getWithParams(InvoiceEndPoints.GET_INVOICE, queryParams, true, lang);
 
-            return getWithParams(InvoiceEndPoints.GET_INVOICE,queryParams,true,lang);
-
-        }
-
+    }
 
 
+    @Step("Create invoice")
+    public Response postInvoice(InvoiceDTO objectBody, boolean auth, LanguageHeader language) {
+        return post(InvoiceEndPoints.GET_INVOICE, objectBody, auth, language);
+
+    }
+
+
+    @Step("Get exact invoice by ID")
+    public Response getInvoiceById(int id,Boolean auth, LanguageHeader lang) {
+
+        return getWithPathParam(InvoiceEndPoints.INVOICE_BY_ID,id,auth,lang);
+
+    }
+
+    @Step("Send email with document ID: {id}")
+    public Response sendEmailWithDocument(int id, SendEmailDTO emailBody){
+
+        return postWithPathParam(InvoiceEndPoints.SEND_EMAIL
+                ,"id"
+                ,id
+                ,emailBody
+                ,true
+                ,LanguageHeader.EN);
+
+
+
+
+
+    }
 
 
 }
